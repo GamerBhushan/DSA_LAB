@@ -1,131 +1,149 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
+#include <string.h>
 
-#define MAX_SIZE 5
 
-struct Queue
+#define MAX 5
+
+typedef struct
 {
-    int front, rear;
-    int tickets[MAX_SIZE];
-};
+    int id;
+    char desc[100];
+} Ticket;
 
-void initQueue(struct Queue *q)
+typedef struct Queue
 {
-    q->front = -1;
-    q->rear = -1;
+    int front;
+    int rear;
+    Ticket tickets[MAX];
+} CircularQueue;
+
+CircularQueue *TicketQueue;
+
+void initQueue()
+{
+    TicketQueue = (CircularQueue *)malloc(sizeof(CircularQueue));
+    TicketQueue->front = -1;
+    TicketQueue->rear = -1;
 }
 
-int isEmpty(struct Queue *q)
+bool isFull()
 {
-    return (q->front == -1);
+    return ((TicketQueue->rear + 1) % MAX == TicketQueue->front);
 }
 
-int isFull(struct Queue *q)
+bool isEmpty()
 {
-    return ((q->rear + 1) % MAX_SIZE == q->front);
+    return (TicketQueue->front == -1);
 }
 
-void submitTicket(struct Queue *q, int ticket_id)
+void submitTicket()
 {
-    if (isFull(q))
+    if (isFull())
     {
-        printf("Queue is full! Cannot accept more tickets.\n");
+        printf("\nQueue is Full.\n");
     }
     else
     {
-        if (q->front == -1)
+        TicketQueue->rear = (TicketQueue->rear + 1) % MAX;
+        if (TicketQueue->front == -1)
         {
-            q->front = 0;
+            TicketQueue->front = 0;
         }
-        q->rear = (q->rear + 1) % MAX_SIZE;
-        q->tickets[q->rear] = ticket_id;
-        printf("Ticket %d submitted successfully.\n", ticket_id);
+
+        int ticket_id;
+        char ticket_desc[100];
+
+        printf("\nEnter Ticket ID: ");
+        scanf("%d", &ticket_id);
+        getchar();
+
+        printf("Enter Ticket Description: ");
+        fgets(ticket_desc, 100, stdin);
+        ticket_desc[strcspn(ticket_desc, "\n")] = 0;
+
+        TicketQueue->tickets[TicketQueue->rear].id = ticket_id;
+        snprintf(TicketQueue->tickets[TicketQueue->rear].desc, sizeof(TicketQueue->tickets[TicketQueue->rear].desc), "%s", ticket_desc);
+
+        printf("\nTicket %d submitted successfully.\n", ticket_id);
     }
 }
 
-void processTicket(struct Queue *q)
+void processTicket()
 {
-    if (isEmpty(q))
+    if (isEmpty())
     {
-        printf("No tickets to process.\n");
+        printf("\nNo tickets to process.\n");
     }
     else
     {
-        int processedTicket = q->tickets[q->front];
-        printf("Ticket %d processed.\n", processedTicket);
-        if (q->front == q->rear)
+        int processedTicket = TicketQueue->tickets[TicketQueue->front].id;
+        printf("Ticket %d processed: %s\n", processedTicket, TicketQueue->tickets[TicketQueue->front].desc);
+        if (TicketQueue->front == TicketQueue->rear)
         {
-
-            q->front = q->rear = -1;
+            TicketQueue->front = TicketQueue->rear = -1;
+        }else{
+            TicketQueue->front = (TicketQueue->front + 1) % MAX;
         }
-        else
-        {
-            q->front = (q->front + 1) % MAX_SIZE;
-        }
+        
     }
 }
 
-void displayQueue(struct Queue *q)
+void displayQueue()
 {
-    if (isEmpty(q))
+    if (isEmpty())
     {
-        printf("Queue is empty.\n");
+        printf("\nQueue is empty.\n");
     }
     else
     {
-        printf("Current Queue Status: ");
-        int i = q->front;
-        while (i != q->rear)
+        printf("\nCurrent Queue Status: \n");
+        int i = TicketQueue->front;
+        while (i != TicketQueue->rear)
         {
-            printf("%d -> ", q->tickets[i]);
-            i = (i + 1) % MAX_SIZE;
+            printf("Ticket ID: %d, Description: %s\n", TicketQueue->tickets[i].id, TicketQueue->tickets[i].desc);
+            i = (i + 1) % MAX;
         }
-        printf("%d\n", q->tickets[q->rear]);
+        printf("Ticket ID: %d, Description: %s\n", TicketQueue->tickets[TicketQueue->rear].id, TicketQueue->tickets[TicketQueue->rear].desc);
     }
+}
+
+void menu()
+{
+    printf("\nCustomer Support Ticket Management System\n");
+    printf("1. Submit a Ticket\n");
+    printf("2. Process a Ticket\n");
+    printf("3. Display Current Queue Status\n");
+    printf("4. Exit\n");
+    printf("\nChoose Your Option: ");
 }
 
 int main()
 {
-    struct Queue ticketQueue;
-    initQueue(&ticketQueue);
-
-    int choice, ticket_id;
-
+    initQueue();
+    int ch = 0;
     do
     {
-
-        printf("\nCustomer Support Ticket Management System\n");
-        printf("1. Submit a Ticket\n");
-        printf("2. Process a Ticket\n");
-        printf("3. Display Current Queue Status\n");
-        printf("4. Exit\n");
-        printf("Enter your choice: ");
-        scanf("%d", &choice);
-
-        switch (choice)
+        menu();
+        scanf("%d", &ch);
+        if (ch == 1)
         {
-        case 1:
-
-            printf("Enter Ticket ID to submit: ");
-            scanf("%d", &ticket_id);
-            submitTicket(&ticketQueue, ticket_id);
-            break;
-        case 2:
-
-            processTicket(&ticketQueue);
-            break;
-        case 3:
-
-            displayQueue(&ticketQueue);
-            break;
-        case 4:
-            printf("Exiting the program...\n");
-            break;
-        default:
-            printf("Invalid choice! Please enter a valid option.\n");
+            submitTicket();
         }
-
-    } while (choice != 4);
+        else if (ch == 2)
+        {
+            processTicket();
+        }
+        else if (ch == 3)
+        {
+            displayQueue();
+        }
+        else if (ch == 4)
+        {
+            exit(0);
+        }
+    } while (ch != 4);
 
     return 0;
 }
