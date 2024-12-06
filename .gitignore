@@ -1,9 +1,4 @@
-# gitignore
-
-# Write The "FileName.extension" This Will Ignore The File In Whole Directory
-
-# Ignoring All .exe files generated during execution
+# Ignore all .exe files in the directory and its subdirectories
 *.exe
 
-# Ignoring the .gitignore
-# /.gitignore
+# Note: .gitignore itself should not be ignored.
