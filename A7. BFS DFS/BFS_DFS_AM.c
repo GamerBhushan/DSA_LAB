@@ -11,7 +11,8 @@ using adjacency list / adjacency matrix and perform BFS and DFS
 #include <string.h>
 #include <stdlib.h>
 
-const int vertex = 6;
+#define vertex 6
+
 int graph[vertex][vertex];
 int visited[vertex]; 
 
@@ -49,7 +50,7 @@ int sPop(){
     if (sIsEmpty() == 1)
     {
         printf("\n\nStack Is Empty\n\n");
-        return;
+        return 0;
     }
     Node *temp = sTop;
     sTop = sTop->next;
@@ -61,9 +62,24 @@ int sPeek(){
     if (sIsEmpty() == 1)
     {
         printf("\n\nStack Is Empty\n\n");
-        return;
+        return 0;
     }
     return sTop->data;
+}
+
+void sDisplay(){
+    if (sIsEmpty() == 1)
+    {
+        printf("\n\nStack Is Empty\n\n");
+        return;
+    }
+    Node *temp = qFront;
+    printf("\n\nDisplaying Stack : \n\n");
+    while (temp != NULL){
+        printf(" %d ",temp->data);
+        temp = temp->next;
+    }
+    printf("\n\n");
 }
 
 void initQueue(){
@@ -93,7 +109,7 @@ int dequeue(){
     if (qIsEmpty() == 1)
     {
         printf("\n\nQueue Is Empty\n\n");
-        return;
+        return 0;
     }
     
     Node *temp = qFront;
@@ -112,18 +128,19 @@ int qPeek(){
 }
 
 void qDisplay(){
-    Node *temp = qFront;
     if (qIsEmpty() == 1)
     {
         printf("\n\nQueue Is Empty\n\n");
         return;
     }
+    Node *temp = qFront;
     printf("\n\nDisplaying Queue : \n\n");
     
     while (temp != NULL){
         printf(" %d ",temp->data);
         temp = temp->next;
     }
+    printf("\n\n");
 }
 
 
@@ -145,6 +162,8 @@ void addEdge(int from, int to){
 }
 
 void confiGraph(){
+    initStack();
+    initQueue();
     initGraph();
     addEdge(0,1);
     addEdge(1,2);
@@ -153,6 +172,9 @@ void confiGraph(){
     addEdge(4,5);
 }
 
+void BFS(){
+    
+}
 
 int main(int argc, char const *argv[])
 {
