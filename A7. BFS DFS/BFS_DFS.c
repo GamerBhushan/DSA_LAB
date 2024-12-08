@@ -10,11 +10,6 @@ using adjacency list / adjacency matrix and perform BFS and DFS
 #include <stdio.h>
 #include <string.h>
 
-typedef struct gp
-{
-    char city[100];
-    struct gp *left,*right;
-}Graph;
 
 
 
