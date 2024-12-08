@@ -10,19 +10,22 @@ using adjacency list / adjacency matrix and perform BFS and DFS
 #include <stdio.h>
 #include <string.h>
 
+void initGraph(int vertex, int g1[vertex][vertex]) {
+    for (int i = 0; i < vertex; i++) {
+        for (int j = 0; j < vertex; j++) {
+            g1[i][j] = 0;
+        }
+    }
+}
 
 
 int main(int argc, char const *argv[])
 {
     // Graph G1 Representation In Adjacency Matrix :
-    int no_of_vertex_of_g1 = 6;
-    int g1[no_of_vertex_of_g1][no_of_vertex_of_g1] = {
-        {0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0, 0}};
+    // No Of Vertex
+    int vertex = 6;
+    int g1[vertex][vertex];
+    initGraph(g1,vertex);
 
     return 0;
 }
