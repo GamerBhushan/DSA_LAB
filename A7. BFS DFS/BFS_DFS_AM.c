@@ -173,7 +173,43 @@ void confiGraph(){
 }
 
 void BFS(){
-    
+    int root_vertex = 2;
+    enqueue(2);
+
+}
+
+/*
+
+        A       B       C       D       E       F
+A       0       1       0       0       0       0
+B       0       0       1       0       0       0
+C       0       0       0       1       1       0
+D       0       0       0       0       0       0
+E       0       0       0       0       0       1
+F       0       0       0       0       0       0
+
+
+*/
+
+void displayAM(){
+    printf("\n\nDisplaying Adjacency Matrix : \n\n");
+    char v[] = {'A','B','C','D','E','F'};
+    printf("\t");
+    for (int i = 0; i < vertex; i++)
+    {
+        printf("%c\t",v[i]);
+    }
+    printf("\n");
+    for (int i = 0; i < vertex; i++)
+    {
+        printf("%c\t",v[i]);
+        for (int j = 0; j < vertex; j++)
+        {
+            printf("%d\t",graph[i][j]);
+        }
+        printf("\n");
+    }
+    printf("\n\n");
 }
 
 int main(int argc, char const *argv[])
@@ -181,6 +217,7 @@ int main(int argc, char const *argv[])
     // Graph G1 Representation In Adjacency Matrix :
     // No Of Vertex
     confiGraph();
+    displayAM();
 
     return 0;
 }
