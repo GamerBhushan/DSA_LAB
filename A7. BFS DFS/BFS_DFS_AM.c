@@ -57,6 +57,14 @@ int sPop(){
     return temp->data;
 }
 
+int sPeek(){
+    if (sIsEmpty() == 1)
+    {
+        printf("\n\nStack Is Empty\n\n");
+        return;
+    }
+    return sTop->data;
+}
 
 void initQueue(){
     qFront = NULL;
