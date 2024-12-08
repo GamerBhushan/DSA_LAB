@@ -12,10 +12,17 @@ using adjacency list / adjacency matrix and perform BFS and DFS
 
 
 
+int main(int argc, char const *argv[])
+{
+    // Graph G1 Representation In Adjacency Matrix :
+    int no_of_vertex_of_g1 = 6;
+    int g1[no_of_vertex_of_g1][no_of_vertex_of_g1] = {
+        {0, 0, 0, 0, 0, 0},
+        {0, 0, 0, 0, 0, 0},
+        {0, 0, 0, 0, 0, 0},
+        {0, 0, 0, 0, 0, 0},
+        {0, 0, 0, 0, 0, 0},
+        {0, 0, 0, 0, 0, 0}};
 
-
-
-int main(int argc, char const *argv[]){
-    
     return 0;
 }
