@@ -29,12 +29,12 @@ void resetVisited(Graph* graph);
 
 int main() {
     int vertices, edges, src, dest, startVertex;
-    printf("Enter the number of locations (vertices): ");
+    printf("Enter the number of Vertices : ");
     scanf("%d", &vertices);
 
     Graph* graph = createGraph(vertices);
 
-    printf("Enter the number of roads (edges): ");
+    printf("Enter the number of Edges : ");
     scanf("%d", &edges);
 
     printf("Enter the edges (source and destination):\n");
