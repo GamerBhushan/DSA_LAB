@@ -10,7 +10,6 @@ typedef struct bk{
 }BookNode;
 
 
-
 BookNode *createBookNode(char name[], double price){
     BookNode *node = (BookNode*) malloc(sizeof(BookNode));
     strcpy(node->Name,name);
@@ -30,7 +29,7 @@ void count(BookNode *head){
         cnt++;
         temp = temp->Next;
     }
-    printf("Total Number Of Books : %d",cnt);
+    printf("\n\nTotal Number Of Books : %d\n\n",cnt);
     
 }
 void displayPerticularBook(BookNode *node){
@@ -73,52 +72,58 @@ void searchBookByName(BookNode *head,char name[]){
 }
 
 void insertBook(BookNode **head,char name[],double price){
+    BookNode *newnode = createBookNode(name,price);
     if (*head == NULL){
-        *head = createBookNode(name,price);
+        *head = newnode;
     }else{
         BookNode *temp = *head;
         while (temp->Next != NULL){
             temp = temp->Next;
         }
-        temp->Next = createBookNode(name,price);
+        temp->Next = newnode;
     }
+    printf("\nBook '%s' Is Added.\n",newnode->Name);
 }
 
-void removeBook(BookNode *head, char name[]){
-    if (head == NULL){
+void removeBook(BookNode **head, char name[]){
+    if (*head == NULL){
         printf("\n\nList Is Empty.\n\n");
         return;
     }
-    BookNode *temp = head, *prev = head;
+    BookNode *temp = *head, *prev = NULL;
     int flag = 0;
-    while (temp != NULL){
-        if(strcmp(temp->Name,name) == 0){
-            if (prev == head){
-                prev = temp->Next;
-            }else{
-                prev->Next = temp->Next;   
+    // Check For Head 
+    if (strcmp(temp->Name, name) == 0){
+        *head = temp->Next;
+        printf("\nRemoved : '%s' \n",temp->Name);
+        free(temp);
+        flag = 1;
+    }else{
+        while (temp != NULL && flag <= 0){
+            if (strcmp(temp->Name,name) == 0){
+                flag = 1;
+                printf("\nRemoved : '%s' \n",temp->Name);
+                prev->Next = temp->Next;
+                free(temp);
+                break;
             }
-            printf("\n\nSuccessfully Removed : %s\n\n",temp->Name);
-            free(temp);
-            flag = 1;
-            break;
+            prev = temp;
+            temp = temp->Next;
         }
-        prev = temp;
-        temp = temp->Next;
     }
     if (flag == 0)
     {
         printf("\n\nBook '%s' is Not Found.\n\n",name);
     }
-    
 }
 
 void menu(){
     printf("\n1. Add Book.");
     printf("\n2. Remove Book.");
-    printf("\n3. Search Book.");
-    printf("\n4. Display All Book.");
-    printf("\n5. Exit.");
+    printf("\n3. Search Book By Name.");
+    printf("\n4. Count Total Books.");
+    printf("\n5. Display All Book.");
+    printf("\n6. Exit.");
     printf("\nChoose Your Option : ");
 }
 
@@ -137,26 +142,29 @@ int main(int argc, char const *argv[]){
             scanf("%s",&name);
             printf("\n\nEnter Book Price : ");
             scanf("%f",&price);
-            insertBook((&head),name,price);
+            insertBook(&head,name,price);
         }else if (ch == 2){
             char name[100];
             printf("\n\nEnter Book Name : ");
             scanf("%s",&name);
-            removeBook(head,name);
+            removeBook(&head,name);
         }else if (ch == 3){
             char name[100];
             printf("\n\nEnter Book Name : ");
             scanf("%s",&name);
             searchBookByName(head,name);
         }else if (ch == 4){
-            displayBooks(head);
+            count(head);
         }else if (ch == 5){
+            displayBooks(head);
+        }else if (ch == 6){
 
-        }else{
+        }
+        else{
             printf("\n\nInavlid Option.\n\n");
         }
         
-    } while (ch!=5);
+    } while (ch!=6);
 
     free(head);    
     return 0;
