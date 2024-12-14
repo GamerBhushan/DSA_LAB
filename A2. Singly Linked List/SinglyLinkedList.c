@@ -2,18 +2,18 @@
 #include <stdlib.h>
 
 // Define the structure for a node
-struct Node {
+typedef struct nd{
     int data;
-    struct Node* next;
-};
+    struct nd* next;
+}Node;
 
 // Function prototypes
-void addNode(struct Node** head, int data);
-void removeNode(struct Node** head, int data);
-void displayList(struct Node* head);
+void addNode(Node** head, int data);
+void removeNode(Node** head, int data);
+void displayList(Node* head);
 
 int main() {
-    struct Node* head = NULL; // Initialize an empty list
+    Node* head = NULL; // Initialize an empty list
     int choice, data;
 
     while (1) {
@@ -48,15 +48,15 @@ int main() {
 }
 
 // Function to add a node to the end of the list
-void addNode(struct Node** head, int data) {
-    struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+void addNode(Node** head, int data) {
+    Node* newNode = (Node*)malloc(sizeof(Node));
     newNode->data = data;
     newNode->next = NULL;
 
     if (*head == NULL) {
         *head = newNode;
     } else {
-        struct Node* temp = *head;
+        Node* temp = *head;
         while (temp->next != NULL) {
             temp = temp->next;
         }
@@ -66,9 +66,9 @@ void addNode(struct Node** head, int data) {
 }
 
 // Function to remove a node by its data
-void removeNode(struct Node** head, int data) {
-    struct Node* temp = *head;
-    struct Node* prev = NULL;
+void removeNode(Node** head, int data) {
+    Node* temp = *head;
+    Node* prev = NULL;
 
     // Check if the head node contains the data
     if (temp != NULL && temp->data == data) {
@@ -97,14 +97,14 @@ void removeNode(struct Node** head, int data) {
 }
 
 // Function to display all nodes in the list
-void displayList(struct Node* head) {
+void displayList(Node* head) {
     if (head == NULL) {
         printf("The list is empty.\n");
         return;
     }
 
     printf("List elements: ");
-    struct Node* temp = head;
+    Node* temp = head;
     while (temp != NULL) {
         printf("%d -> ", temp->data);
         temp = temp->next;
