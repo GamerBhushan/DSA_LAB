@@ -10,7 +10,7 @@ void BubbleSort(int size, int data[], int type);
 
 
 
-
+ 
 
 int generateRandomInt(int min, int max)
 {
