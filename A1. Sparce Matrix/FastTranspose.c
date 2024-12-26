@@ -83,11 +83,27 @@ void fastTranspose(int row, int col, int sparce_max_row, int sparce_max_col, int
     display1DArray("\nThe Total Array Is :  ",col,total);
     display1DArray("\nThe Index Array Is :  ",col+1,index);
 
+    int transpose[sparce_max_row][sparce_max_col];
+
+    // transpose[0][0] = sparce[0][1];
+    // transpose[0][1] = sparce[0][0];
+    // transpose[0][2] = sparce[0][2];
+
+    for (int i = 0; i < sparce_max_row; i++){
+        int rowIndex = sparce[i][1];
+        int placedAtRow = index[rowIndex];
+        transpose[placedAtRow][0] = sparce[i][1];
+        transpose[placedAtRow][1] = sparce[i][0];
+        transpose[placedAtRow][2] = sparce[i][2];
+        index[rowIndex]++;
+    }
+    displayMatrix("\n\nFast Transpose : \nRow\tColumn\tValue\n",sparce_max_row,sparce_max_col,transpose);
+
 }
 
 int main()
 {
-    int matrix[3][4] = {
+    int matrix[max_row][max_col] = {
         {0, 0, 7, 0},
         {8, 0, 5, 0},
         {9, 0, 2, 0}};
