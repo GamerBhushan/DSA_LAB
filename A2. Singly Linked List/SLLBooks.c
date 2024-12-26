@@ -137,11 +137,11 @@ int main(int argc, char const *argv[]){
         scanf("%d",&ch);
         if (ch == 1){
             char name[100];
-            double price = 0;
+            double price;
             printf("\n\nEnter Book Name : ");
             scanf("%s",&name);
             printf("\n\nEnter Book Price : ");
-            scanf("%f",&price);
+            scanf("%lf",&price);
             insertBook(&head,name,price);
         }else if (ch == 2){
             char name[100];
