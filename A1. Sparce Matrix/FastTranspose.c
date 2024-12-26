@@ -6,6 +6,17 @@
 void displayMatrix(char message[], int row, int col, int matrix[row][col]);
 void createSparceMatrix(int row, int col, int totalNonZeroValues, int matrix[row][col], int sparce[totalNonZeroValues + 1][3]);
 void fastTranspose(int row, int col, int sparce_max_row, int sparce_max_col, int matrix[row][col], int sparce[sparce_max_col][sparce_max_row]);
+void display1DArray(char message[], int size, int arr[size]);
+
+void display1DArray(char message[], int size, int arr[size])
+{
+    printf("%s",message);
+    for (int i = 0; i < size; i++)
+    {
+        printf("%d   ", arr[i]);
+    }
+}
+
 void displayMatrix(char message[], int row, int col, int matrix[row][col])
 {
     printf("\n%s", message);
@@ -61,14 +72,17 @@ void fastTranspose(int row, int col, int sparce_max_row, int sparce_max_col, int
         printf("\n");
     }
 
-    int index[col+1];
-    index[0] = 1;  // By Rule
+    int index[col + 1];
+    index[0] = 1; // By Rule
 
-    printf("\nThe Total Array Is : ");
-    for (int i = 0; i < col; i++)
+    for (int i = 1; i < col + 1; i++)
     {
-        printf("%d\t", total[i]);
+        index[i] = index[i - 1] + total[i - 1]; // Formula
     }
+
+    display1DArray("\nThe Total Array Is :  ",col,total);
+    display1DArray("\nThe Index Array Is :  ",col+1,index);
+
 }
 
 int main()
@@ -96,6 +110,5 @@ int main()
     createSparceMatrix(max_row, max_col, total_non_zero, matrix, sparce);
     displayMatrix("Sparce Matrix Representation : \nRow\tColumn\tValue\n", sparce_max_row, sparce_max_col, sparce);
 
-    fastTranspose(max_row,max_col,sparce_max_row,sparce_max_col,matrix,sparce);
-    
+    fastTranspose(max_row, max_col, sparce_max_row, sparce_max_col, matrix, sparce);
 }
