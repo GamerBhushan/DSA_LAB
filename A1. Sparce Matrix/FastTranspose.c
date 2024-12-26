@@ -4,9 +4,8 @@
 #define max_col 4
 
 void displayMatrix(char message[], int row, int col, int matrix[row][col]);
-void createSparceMatrix(int row, int col, int totalNonZeroValues, int matrix[row][col], int sparce[totalNonZeroValues+1][3]);
-void fastTranspose(int tnzv, int sr[3][tnzv]);
-
+void createSparceMatrix(int row, int col, int totalNonZeroValues, int matrix[row][col], int sparce[totalNonZeroValues + 1][3]);
+void fastTranspose(int row, int col, int sparce_max_row, int sparce_max_col, int matrix[row][col], int sparce[sparce_max_col][sparce_max_row]);
 void displayMatrix(char message[], int row, int col, int matrix[row][col])
 {
     printf("\n%s", message);
@@ -21,7 +20,7 @@ void displayMatrix(char message[], int row, int col, int matrix[row][col])
     }
 }
 
-void createSparceMatrix(int row, int col, int totalNonZeroValues, int matrix[row][col], int sparce[totalNonZeroValues+1][3])
+void createSparceMatrix(int row, int col, int totalNonZeroValues, int matrix[row][col], int sparce[totalNonZeroValues + 1][3])
 {
 
     sparce[0][0] = max_row;
@@ -43,9 +42,33 @@ void createSparceMatrix(int row, int col, int totalNonZeroValues, int matrix[row
     }
 }
 
-void fastTranspose(int tnzv, int sr[3][tnzv])
+void fastTranspose(int row, int col, int sparce_max_row, int sparce_max_col, int matrix[row][col], int sparce[sparce_max_col][sparce_max_row])
 {
-    int total[max_col];
+    int total[col];
+    int non_zero_ele_in_col_count = 0;
+
+    for (int i = 0; i < col; i++)
+    {
+        non_zero_ele_in_col_count = 0;
+        for (int j = 0; j < row; j++)
+        {
+            if (matrix[j][i] != 0)
+            {
+                non_zero_ele_in_col_count++;
+            }
+        }
+        total[i] = non_zero_ele_in_col_count;
+        printf("\n");
+    }
+
+    int index[col+1];
+    index[0] = 1;  // By Rule
+
+    printf("\nThe Total Array Is : ");
+    for (int i = 0; i < col; i++)
+    {
+        printf("%d\t", total[i]);
+    }
 }
 
 int main()
@@ -53,8 +76,7 @@ int main()
     int matrix[3][4] = {
         {0, 0, 7, 0},
         {8, 0, 5, 0},
-        {9, 0, 2, 0}
-    };
+        {9, 0, 2, 0}};
 
     int total_non_zero = 0;
     for (int i = 0; i < max_row; i++)
@@ -71,6 +93,9 @@ int main()
     int sparce[sparce_max_row][sparce_max_col];
 
     displayMatrix("The Given Matrix Is :", max_row, max_col, matrix);
-    createSparceMatrix(max_row,max_col,total_non_zero,matrix,sparce);
-    displayMatrix("Sparce Matrix Representation : \nRow\tColumn\tValue\n",sparce_max_row,sparce_max_col,sparce);
+    createSparceMatrix(max_row, max_col, total_non_zero, matrix, sparce);
+    displayMatrix("Sparce Matrix Representation : \nRow\tColumn\tValue\n", sparce_max_row, sparce_max_col, sparce);
+
+    fastTranspose(max_row,max_col,sparce_max_row,sparce_max_col,matrix,sparce);
+    
 }
